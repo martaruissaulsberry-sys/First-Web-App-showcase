@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davis Fruit Shop</title>
+    <style>
+        body {
+            background-image: url('c:/Users/terrio/OneDrive/Pictures/Saved Pictures/beach background.jpg');
+            background-color: black;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px 20px 80px;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .fruit-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 16px;
+            margin: 20px auto 30px;
+            max-width: 980px;
+        }
+        .fruit-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.55);
+            padding: 10px;
+            border-radius: 14px;
+            width: 170px;
+        }
+        .fruit-photo {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border: 2px solid white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+            display: block;
+        }
+        .fruit-name {
+            font-size: 1em;
+            font-weight: bold;
+            margin: 8px 0 4px;
+        }
+        .fruit-price {
+            font-size: 0.95em;
+            color: #fff3b0;
+            margin-bottom: 8px;
+        }
+        .fruit-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .fruit-controls input {
+            width: 42px;
+            text-align: center;
+            border-radius: 6px;
+            border: none;
+            padding: 4px;
+        }
+        .fruit-controls button {
+            background: #ffcc66;
+            color: #222;
+            border: none;
+            border-radius: 6px;
+            padding: 5px 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .fruit-controls button:hover {
+            background: #ffb84d;
+        }
+        .checkout {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .checkout button {
+            background: #ff6666;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        .payment-note {
+            margin-top: 10px;
+            color: #ddd;
+            font-size: 0.95em;
+        }
+        .cart-section {
+            max-width: 780px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            background: #000000;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 3, 218, 0.35);
+            padding: 10px 12px;
+            border-radius: 8px;
+            gap: 12px;
+        }
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .remove-btn {
+            background: #ff6666;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 5px 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .cart-total {
+            margin-top: 16px;
+            text-align: right;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .empty-cart {
+            margin: 0;
+            color: #ffe5b4;
+            font-style: italic;
+        }
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        p {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 2em;
+            text-align: center;
+            margin-top: 25px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .card-content a {
+            color: #fff3b0;
+            text-decoration: underline;
+        }
+    </style>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="card">
+        <h1> Davis Fruit Shop </h1>
+    <p> Welcome to the Davis Fruit Shop!</p>
+    <p> We have the freshest fruits available in the market.</p>
+    <p> Visit us today and taste the difference!</p>
+    <h2> Our Products</h2>
+    <p> Check out our selection of fresh fruits:</p>
+    <div class="fruit-gallery">
+        <div class="fruit-item" data-price="2.49">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/apple.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/apple.jpg" alt="Apple" class="fruit-photo"></a>
+            <div class="fruit-name">Apple</div>
+            <div class="fruit-price">$2.49 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+        <div class="fruit-item" data-price="2.99">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/pear.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/pear.jpg" alt="Pear" class="fruit-photo"></a>
+            <div class="fruit-name">Pear</div>
+            <div class="fruit-price">$2.99 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+        <div class="fruit-item" data-price="3.29">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/Plums.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/Plums.jpg" alt="Plums" class="fruit-photo"></a>
+            <div class="fruit-name">Plums</div>
+            <div class="fruit-price">$3.29 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+        <div class="fruit-item" data-price="4.99">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/cherries.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/cherries.jpg" alt="Cherries" class="fruit-photo"></a>
+            <div class="fruit-name">Cherries</div>
+            <div class="fruit-price">$4.99 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+        <div class="fruit-item" data-price="3.79">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/Strawberries.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/Strawberries.jpg" alt="Strawberries" class="fruit-photo"></a>
+            <div class="fruit-name">Strawberries</div>
+            <div class="fruit-price">$3.79 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+        <div class="fruit-item" data-price="3.49">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/blueberries.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/blueberries.jpg" alt="Blueberries" class="fruit-photo"></a>
+            <div class="fruit-name">Blueberries</div>
+            <div class="fruit-price">$3.49 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+        <div class="fruit-item" data-price="2.79">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/mango.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/mango.jpg" alt="Mango" class="fruit-photo"></a>
+            <div class="fruit-name">Mango</div>
+            <div class="fruit-price">$2.79 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+        <div class="fruit-item" data-price="3.99">
+            <a href="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/raspberry-concentrate.jpg" target="_blank"><img src="file:///C:/Users/terrio/OneDrive/Pictures/Saved%20Pictures/raspberry-concentrate.jpg" alt="Raspberry" class="fruit-photo"></a>
+            <div class="fruit-name">Raspberry</div>
+            <div class="fruit-price">$3.99 each</div>
+            <div class="fruit-controls">
+                <input type="number" value="1" min="1">
+                <button type="button">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout">
+        <button id="checkoutBtn" type="button">Checkout</button>
+        <p class="payment-note">This page is ready for payment processing. Add a backend endpoint to complete purchases with Stripe.</p>
+    </div>
+
+    <section class="cart-section" aria-label="Shopping cart">
+        <h2>Your Cart</h2>
+        <div id="cartItems" class="cart-items">
+            <p class="empty-cart">Your cart is empty.</p>
+        </div>
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">$0.00</span>
+        </div>
+    </section>
+
+    <script>
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY');
+        const cart = [];
+
+        function updateCheckoutButton() {
+            if (!checkoutBtn) return;
+            checkoutBtn.disabled = cart.length === 0;
+        }
+
+        function renderCart() {
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+                cartTotal.textContent = '$0.00';
+                updateCheckoutButton();
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const lineTotal = item.price * item.quantity;
+                total += lineTotal;
+
+                const itemRow = document.createElement('div');
+                itemRow.className = 'cart-item';
+                itemRow.innerHTML = `
+                    <span>${item.name} x ${item.quantity}</span>
+                    <div class="cart-item-actions">
+                        <span>$${lineTotal.toFixed(2)}</span>
+                        <button class="remove-btn" data-name="${item.name}" type="button">Remove</button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemRow);
+            });
+
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function addToCart(name, price, quantity) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ name, price, quantity });
+            }
+            renderCart();
+        }
+
+        function removeFromCart(name) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                const index = cart.indexOf(existingItem);
+                if (index > -1) {
+                    cart.splice(index, 1);
+                }
+            }
+            renderCart();
+        }
+
+        cartItemsContainer.addEventListener('click', event => {
+            if (event.target.classList.contains('remove-btn')) {
+                removeFromCart(event.target.dataset.name);
+            }
+        });
+
+        document.querySelectorAll('.fruit-controls button').forEach(button => {
+            button.addEventListener('click', () => {
+                const fruitItem = button.closest('.fruit-item');
+                const name = fruitItem.querySelector('.fruit-name').textContent.trim();
+                const price = parseFloat(fruitItem.getAttribute('data-price'));
+                const quantity = parseInt(fruitItem.querySelector('input').value, 10) || 1;
+                addToCart(name, price, quantity);
+            });
+        });
+
+        document.getElementById('checkoutBtn')?.addEventListener('click', async () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add some fruit before checking out.');
+                return;
+            }
+
+            const lineItems = cart.map(item => ({
+                price_data: {
+                    currency: 'usd',
+                    product_data: { name: item.name },
+                    unit_amount: Math.round(item.price * 100),
+                },
+                quantity: item.quantity,
+            }));
+
+            try {
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ items: lineItems }),
+                });
+
+                const data = await response.json();
+                if (data.sessionId) {
+                    const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                } else {
+                    throw new Error(data.error || 'Unable to create checkout session.');
+                }
+            } catch (error) {
+                alert(`Checkout error: ${error.message}`);
+            }
+        });
+
+        renderCart();
+
+    </script>
+</body>
+</html>
